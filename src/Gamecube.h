@@ -115,14 +115,10 @@ typedef union{
         uint8_t yAxis;
         uint8_t cxAxis;
         uint8_t cyAxis;
-        /*
-        uint8_t left;
-        uint8_t right;
-        */
+        uint8_t right : 4;//note: within bytes, LSB is first
         uint8_t left : 4;
-        uint8_t right : 4;
-        uint8_t analogA : 4;
         uint8_t analogB : 4;
+        uint8_t analogA : 4;
     } mode0;
 
     struct {
@@ -149,12 +145,12 @@ typedef union{
         // 3rd-8th data byte
         uint8_t xAxis;
         uint8_t yAxis;
-        uint8_t cxAxis : 4;
         uint8_t cyAxis : 4;
+        uint8_t cxAxis : 4;
         uint8_t left;
         uint8_t right;
-        uint8_t analogA : 4;
         uint8_t analogB : 4;
+        uint8_t analogA : 4;
     } mode1;
 
     struct {
@@ -181,10 +177,10 @@ typedef union{
         // 3rd-8th data byte
         uint8_t xAxis;
         uint8_t yAxis;
-        uint8_t cxAxis : 4;
         uint8_t cyAxis : 4;
-        uint8_t left : 4;
+        uint8_t cxAxis : 4;
         uint8_t right : 4;
+        uint8_t left : 4;
         uint8_t analogA;
         uint8_t analogB;
     } mode2;
