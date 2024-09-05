@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include <Arduino.h>
 #include "joybus.h"
+#include <hardware/clocks.h>
 #include <hardware/pio.h>
 #include <hardware/timer.h>
 #include <pico/stdlib.h>
