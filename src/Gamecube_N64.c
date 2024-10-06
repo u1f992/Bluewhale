@@ -59,7 +59,7 @@ uint8_t gc_n64_send_get(const uint8_t pin, uint8_t* command, const uint8_t comma
 void gc_n64_send(const uint8_t pin, uint8_t* buff, uint8_t len){
     if (callonce) {
         set_sys_clock_khz(130000, true);
-        joybus_port_init(&_port, pin, pio1, -1, -1);
+        joybus_port_init(&_port, pin, pio0, -1, -1);
         callonce = false;
     }
     joybus_send_bytes(&_port, buff, len);
@@ -72,7 +72,7 @@ void gc_n64_send(const uint8_t pin, uint8_t* buff, uint8_t len){
 uint8_t gc_n64_get(const uint8_t pin, uint8_t* buff, uint8_t len, bool timeout){
     if (callonce) {
         set_sys_clock_khz(130000, true);
-        joybus_port_init(&_port, pin, pio1, -1, -1);
+        joybus_port_init(&_port, pin, pio0, -1, -1);
         callonce = false;
     }
     uint8_t receivedBytes = joybus_receive_bytes(&_port, buff, len, 50, timeout);
