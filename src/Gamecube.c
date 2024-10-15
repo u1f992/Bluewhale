@@ -221,5 +221,11 @@ uint8_t gc_write(const uint8_t pin, Gamecube_Status_t* status, Gamecube_Origin_t
     // End of time sensitive code
     //SREG = oldSREG;
 
+    if (ret == 0) {
+        //If reading of a command coming from the host fails, the PIO is reset after waiting for a time of up to 3 bytes + stop bit. (about 120~130 microseconds)
+        busy_wait_us(130);
+        gc_n64_reset();
+    }
+
     return ret;
 }
