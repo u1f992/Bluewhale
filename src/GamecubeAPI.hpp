@@ -195,12 +195,16 @@ CGamecubeConsole::CGamecubeConsole(const uint8_t p) : pin(p){
     // Empty
 }
 
+extern "C" void debug_puts(const char *s) {
+    Serial.print(s);
+}
 
 bool CGamecubeConsole::write(Gamecube_Data_t &data)
 {
     // Abort if controller was not initialized.
     // Gamecube will refuse and weird connect/disconnect errors will occur.
     if (data.report.origin) {
+        Serial.println("data.report.origin=1");
         return false;
     }
 
@@ -210,18 +214,22 @@ bool CGamecubeConsole::write(Gamecube_Data_t &data)
 
     // Write a respond to the gamecube, depending on what it requests
     uint8_t ret = gc_write(pin, &data.status, &data.origin, &data.report);
-
+    bool init = false;
+    bool origin = false;
+    
     // Init
     if(ret == 1)
     {
         // Try to answer a possible following origin request
         ret = gc_write(pin, &data.status, &data.origin, &data.report);
+        init = true;
     }
 
     // Origin
     if(ret == 2){
         // Try to answer a possible following read request
         ret = gc_write(pin, &data.status, &data.origin, &data.report);
+        origin = true;
     }
 
     // End of time sensitive code
@@ -240,6 +248,10 @@ bool CGamecubeConsole::write(Gamecube_Data_t &data)
         data.status.rumble = false;
         return true;
     }
+
+    char buffer[64];
+    sprintf(buffer, "init:%d,origin:%d,ret:%d\n", init, origin, ret);
+    Serial.print(buffer);
 
     // Return error if no reading was possible
     return false;

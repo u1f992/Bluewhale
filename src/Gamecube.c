@@ -138,6 +138,8 @@ void gc_report_convert(Gamecube_Report_t* report, Gamecube_Report_t* dest_report
         dest_report->mode0.analogB = 0;
     }
 }
+#include <stdio.h>
+extern void debug_puts(const char *);
 
 uint8_t gc_write(const uint8_t pin, Gamecube_Status_t* status, Gamecube_Origin_t* origin, Gamecube_Report_t* report)
 {
@@ -220,6 +222,11 @@ uint8_t gc_write(const uint8_t pin, Gamecube_Status_t* status, Gamecube_Origin_t
 
     // End of time sensitive code
     //SREG = oldSREG;
-
+    
+    if (ret == 0) {
+        char buffer[64];
+        sprintf(buffer, "receivedBytes:%d,command[0]:%d\n", receivedBytes, command[0]);
+        debug_puts(buffer);
+    }
     return ret;
 }
