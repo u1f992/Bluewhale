@@ -78,3 +78,7 @@ uint8_t gc_n64_get(const uint8_t pin, uint8_t* buff, uint8_t len, bool timeout){
     uint8_t receivedBytes = joybus_receive_bytes(&_port, buff, len, 50, timeout);
     return receivedBytes;
 }
+
+void gc_n64_reset(void){
+    joybus_port_reset(&_port);
+}

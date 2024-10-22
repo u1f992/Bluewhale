@@ -92,6 +92,8 @@ uint8_t gc_n64_get(const uint8_t pin, uint8_t* buff, uint8_t len, bool timeout)
     //volatile uint8_t* modePort, volatile uint8_t* outPort, volatile uint8_t * inPort, uint8_t bitMask)
     __attribute__((noinline));
 
+void gc_n64_reset(void) __attribute__((noinline));
+
 #ifdef __cplusplus
 }
 #endif
